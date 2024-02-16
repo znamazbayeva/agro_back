@@ -18,3 +18,8 @@ class ProductViewSet(viewsets.ModelViewSet):
     # parser_classes = [(MultiPartParser)]
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
+    def get_queryset(self):
+        subcategory = self.request.query_params.get("subcategory")
+        if subcategory is not None:
+            queryset = queryset.filter(subcategory=subcategory)
+        return queryset
