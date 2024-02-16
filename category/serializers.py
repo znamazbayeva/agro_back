@@ -8,6 +8,7 @@ class SubcategorySerializer(serializers.ModelSerializer):
         verbose_name_plural = "subcategories"
 
 class CategorySerializer(serializers.ModelSerializer):
+    subcategories = SubcategorySerializer(many=True)
     class Meta:
         model = Category
         fields = '__all__'
