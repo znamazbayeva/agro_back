@@ -41,5 +41,5 @@ urlpatterns = [
     path('api/category/', include('category.urls')),
     path('api/product/', include('product.urls')),
     path('api/order/', include('order.urls')),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
