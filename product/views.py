@@ -14,7 +14,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing user instances.
     """
-    pagination_class = StandardResultsSetPagination
-    parser_classes = [(MultiPartParser)]
+    # pagination_class = StandardResultsSetPagination
+    # parser_classes = [(MultiPartParser)]
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
