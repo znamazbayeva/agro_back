@@ -4,6 +4,9 @@ from .models import Product
 from rest_framework import viewsets
 from rest_framework.parsers import MultiPartParser
 from rest_framework.pagination import PageNumberPagination
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
 # Create your views here.
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 10
@@ -12,14 +15,28 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 class ProductViewSet(viewsets.ModelViewSet):
     """
-    A viewset for viewing and editing user instances.
+    ---
+    parameters:
+    - name: subcategory
+      in: query
+      description: Subcategory filter
+      required: false
+      type: string
     """
-    # pagination_class = StandardResultsSetPagination
-    # parser_classes = [(MultiPartParser)]
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'subcategory_id', openapi.IN_QUERY, description='Subcategory filter', type=openapi.TYPE_INTEGER
+            )
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
     def get_queryset(self):
-        subcategory = self.request.query_params.get("subcategory")
-        if subcategory is not None:
-            queryset = queryset.filter(subcategory=subcategory)
+        queryset = super().get_queryset()
+        subcategory_id = self.request.query_params.get('subcategory_id')
+        if subcategory_id is not None:
+            queryset = queryset.filter(subcategory_id=subcategory_id)
         return queryset
