@@ -12,6 +12,9 @@ class Product(models.Model):
     photo = models.ImageField(null=True, blank=True, verbose_name="Фото")
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     count = models.IntegerField(verbose_name="Количество")
+    @property
+    def category_info(self):
+        return self.subcategory.category
     def __str__(self):
         return self.name
     class Meta:
