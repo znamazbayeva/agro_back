@@ -6,6 +6,9 @@ class Category(models.Model):
     category_icon = models.ImageField(null=True, blank=True)
     def __str__(self):
         return self.name
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
 
 class Subcategory(models.Model):
     category = models.ForeignKey(Category, related_name='subcategories', on_delete=models.CASCADE)
@@ -13,3 +16,6 @@ class Subcategory(models.Model):
     icon = models.ImageField(null=True, blank=True)
     def __str__(self):
         return self.name
+    class Meta:
+        verbose_name = 'Субкатегория'
+        verbose_name_plural = 'Субкатегории'

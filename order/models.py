@@ -8,6 +8,9 @@ class Order(models.Model):
     created_at = models.DateField(auto_now_add=True)
     def __str__(self):
         return self.name
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
 class OrderItem(models.Model):
     order=models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE,default=None)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
