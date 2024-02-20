@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Order, OrderItem
-from django.core.mail import send_mail
+from product.models import Product
+from product.serializers import ProductSerializer
+from django.core.mail import EmailMessage
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
@@ -15,14 +17,17 @@ class OrderSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         order_items = validated_data.pop('order_items')
         order = Order.objects.create(**validated_data)
+        order_string = ""
         for item in order_items:
             OrderItem.objects.create(order_id=order.id, **item)
-        send_mail(
-            'Instance {} has been created'.format(order.pk),
-            'Here is the message. DATA: {}'.format(validated_data),
-            'zhuldyznamazbayeva@gmail.com',
-            ['zhuldyznamazbayeva@gmail.com'],
-            fail_silently=False,
+            product_data = Product.objects.get(id=item['product'].id)
+            order_string += "Продукт: {} Количеcтво: {} Цена: {} \n".format(product_data.name, item['quantity'], product_data.price)
+        
+        email = EmailMessage(
+            'Заказ #{}'.format(order.pk),
+            order_string,
+            to=['askar.agroweb@gmail.com'],
         )
+        email.send()
 
         return order
