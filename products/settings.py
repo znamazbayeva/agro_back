@@ -31,6 +31,7 @@ SECRET_KEY = "django-insecure-7(fa_ahq-cjgcen-&sazk#mde3=6+5o1(*110cd%89sk0ctk1-
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
+LANGUAGE_CODE="ru"
 
 
 # Application definition
