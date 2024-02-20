@@ -22,7 +22,7 @@ class OrderSerializer(serializers.ModelSerializer):
             OrderItem.objects.create(order_id=order.id, **item)
             product_data = Product.objects.get(id=item['product'].id)
             order_string += "Продукт: {} Количеcтво: {} Цена: {} \n".format(product_data.name, item['quantity'], product_data.price)
-        
+        order_string += "Имя: {}, Телефон: {}".format(validated_data["name"], validated_data["phone"])
         email = EmailMessage(
             'Заказ #{}'.format(order.pk),
             order_string,
