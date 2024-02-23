@@ -7,7 +7,7 @@ class Order(models.Model):
     phone = models.CharField(max_length=200, null=True, blank=True, verbose_name="Телефон")
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     def __str__(self):
-        return self.name
+        return "# {}, дата: {}".format(self.pk, self.created_at)
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
